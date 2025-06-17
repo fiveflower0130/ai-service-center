@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drill_map_ai"
+version = "0.1.0"
+description = "Drill Map AI 模組"
+authors = [
+    { name="你的名字", email="your@email.com" }
+]
+dependencies = [
+    "numpy",
+    "pandas",
+    "torch",
+    "cnocr",
+    "opencv-python",
+    "autogluon.tabular",
+    "scipy",
+    "Pillow"
+]
+requires-python = ">=3.8"
