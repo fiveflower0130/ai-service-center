@@ -17,5 +17,5 @@ setup(
         "Pillow",
         # ...其他相依套件...
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.10.13",
 )
