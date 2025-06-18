@@ -1,7 +1,7 @@
 import asyncio
 from fastapi import FastAPI
 from ai_modules.drill_map_ai.module import DrillMapAIModule
-from .route_drill_map import router as drill_map_router
+from .api_route import router as drill_map_router
 
 app = FastAPI(title="AI Services Center")
 
@@ -19,4 +19,6 @@ async def startup_event():
 
 app.include_router(drill_map_router)
 
-# 其他 AI 模組也可用同樣方式註冊
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the AI Services Center"}
