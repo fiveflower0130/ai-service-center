@@ -15,12 +15,12 @@ from PIL import Image
 
 class DrillMapAIModule:
     # Initialize icecream for debugging
-    
-    if os.getenv('PRODUCTION') == 1:
-        ic.disable()
-    else:
-        ic.enable()
-        ic.configureOutput(includeContext=True, prefix='[DrillMapAI]->')
+    ic.disable()
+    # if os.getenv('PRODUCTION') == 1:
+    #     ic.disable()
+    # else:
+    #     ic.enable()
+    #     ic.configureOutput(includeContext=True, prefix='[DrillMapAI]->')
 
     def __init__(self):
         # 設定 icecream 的輸出
@@ -186,7 +186,7 @@ class DrillMapAIModule:
                 raise ValueError(f"No data available for model {model_key}. Please check the statistics file.")
             self._model_stats[model_key]  = model_shape
     
-    async def _load_and_prepare_stat(self, model_key: str) -> Awaitable[pd.DataFrame]:
+    async def _load_and_prepare_stat(self, model_key: str) -> pd.DataFrame:
         """
         讀取並準備統計數據
         :param model_key: 模型名稱
