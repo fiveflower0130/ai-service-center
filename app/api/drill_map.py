@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
-from ai_modules.drill_map_ai.module import DrillMapAIModule
+from ..ai_modules.drill_map_ai.module import DrillMapAIModule
 from .schemas import ClassificationRequest, Resp
 
 router = APIRouter(
     prefix="/drill_map",
-    tags=["Drill Map AI"]
+    tags=["drill_map_ai"]
 )
 
 def get_drill_ai_module():
-    from .app import drill_ai_module
+    from ..app import drill_ai_module
     return drill_ai_module
 
 # API文件中定義的回傳格式
@@ -23,16 +23,16 @@ def resp(errMsg, data=None):
 
     return resp
 
-@router.post("/classify", response_model = Resp, summary="對機鑽圖進行預測分類")
+@router.post("/classify", response_model = Resp, summary="機鑽圖分類")
 async def classify(
     request: ClassificationRequest,
     module: DrillMapAIModule = Depends(get_drill_ai_module)
 ):
     '''對機鑽圖進行預測分類\n
-    Arguments:
+    Arguments:\n
     - request: ClassificationRequest，包含圖片的URL或本地路徑和產品名稱\n
     - module: DrillMapAIModule，AI模組\n
-    Returns:
+    Returns:\n
     - Resp，包含狀態碼、錯誤信息和分類結果\n
     正確回應範例: 
     {
@@ -49,7 +49,8 @@ async def classify(
     {
         "code": "1",
         "error": "圖片加載失敗"
-    }
+    }\n
+    這表示圖片加載失敗，無法進行分類。\n
     '''
     data = await module.get_ai_classification(request.img_src, request.product_name)
     return resp(None, data)
