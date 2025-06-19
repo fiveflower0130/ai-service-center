@@ -23,10 +23,33 @@ def resp(errMsg, data=None):
 
     return resp
 
-@router.post("/classify", response_model = Resp)
+@router.post("/classify", response_model = Resp, summary="對機鑽圖進行預測分類")
 async def classify(
     request: ClassificationRequest,
     module: DrillMapAIModule = Depends(get_drill_ai_module)
 ):
+    '''對機鑽圖進行預測分類\n
+    Arguments:
+    - request: ClassificationRequest，包含圖片的URL或本地路徑和產品名稱\n
+    - module: DrillMapAIModule，AI模組\n
+    Returns:
+    - Resp，包含狀態碼、錯誤信息和分類結果\n
+    正確回應範例: 
+    {
+        "code": "0",
+        "error": "",
+        "data": {
+            "classification_code": "TYPE0",
+            "classification_model": "A287570_",
+            "distance": 34.691369
+        }
+    }\n
+    其中，classification_code為分類代碼，classification_model為分類模型名稱，distance為距離值。\n
+    可能的錯誤回應範例:
+    {
+        "code": "1",
+        "error": "圖片加載失敗"
+    }
+    '''
     data = await module.get_ai_classification(request.img_src, request.product_name)
     return resp(None, data)
