@@ -18,3 +18,6 @@ class ClassificationRecord(BaseModel):
     classification_model: str
     mahalanobis_distance: float
     classification_time: datetime
+    
+    class Config:
+        orm_mode = True
