@@ -148,6 +148,8 @@ class DrillMapAIModule:
     async def _init_resnet_model(self, num_class:int=2, feature_extract:bool=True) -> Awaitable[Tuple[nn.Module, int]]:
         """
         初始化 ResNet 模型 目前只有用到18
+        :param num_class: 分類數量
+        :param feature_extract: 是否凍結參數
         :return: resnet 模型實例, input_size
         """
         try:
@@ -225,6 +227,8 @@ class DrillMapAIModule:
     def _get_file_version(self, file_path: str) -> int:
         """
         根據檔案修改日期判斷 file_ver
+        :param file_path: 檔案路徑
+        :return: 0 為新版，1 為舊版，-1 為無法判斷版本
         """
         try:
             file_modified_time = os.path.getmtime(file_path)
