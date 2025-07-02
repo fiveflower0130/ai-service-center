@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from ..ai_modules.drill_map_ai.module import DrillMapAIModule
-from .schemas import ClassificationRequest, Resp
+from ..schemas import ClassificationRequest, Resp
+from ..utils import resp
 
 router = APIRouter(
     prefix="/drill_map",
@@ -11,17 +12,7 @@ def get_drill_ai_module():
     from ..app import drill_ai_module
     return drill_ai_module
 
-# API文件中定義的回傳格式
-def resp(errMsg, data=None):
-    resp = {"code": "0", "error": ""}
 
-    if errMsg is not None:
-        resp["code"] = "1"
-        resp["error"] = errMsg
-    else:
-        resp["data"] = data
-
-    return resp
 
 @router.post("/classify", response_model = Resp, summary="機鑽圖分類")
 async def classify(
