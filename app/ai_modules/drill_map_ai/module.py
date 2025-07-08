@@ -15,7 +15,7 @@ from PIL import Image
 
 class DrillMapAIModule:
     # Initialize icecream for debugging
-    ic.disable()
+    # ic.disable()
     # if os.getenv('PRODUCTION') == 1:
     #     ic.disable()
     # else:
