@@ -10,11 +10,12 @@ async_session = sessionmaker(
 )
 mysql_base = declarative_base()
 
-
+# 供API使用的Mysql Session
 async def get_mysql_db():
     async with async_session() as session:
         yield session
 
+# 非API使用的Mysql Session
 @asynccontextmanager
 async def mysql_session():
     async for session in get_mysql_db():
