@@ -1,8 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from contextlib import asynccontextmanager
+from app.config import config
 
-DATABASE_URL = "mysql+asyncmy://5940:5940@192.168.0.101:3306/tid_5940"
+DATABASE_URL = config.mysql_url
 
 engine = create_async_engine(DATABASE_URL, echo=False, future=True)
 async_session = sessionmaker(
