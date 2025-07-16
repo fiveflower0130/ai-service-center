@@ -1,6 +1,10 @@
 __pycache__/
 data_model/
 *.pyc
+*.bak
+*.dat
+*.dir
 .venv/
 .env
 .cache/
+
