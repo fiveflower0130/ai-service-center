@@ -9,6 +9,7 @@ engine = create_async_engine(DATABASE_URL, echo=False, future=True)
 async_session = sessionmaker(
     bind=engine, expire_on_commit=False, class_=AsyncSession
 )
+
 mysql_base = declarative_base()
 
 # 供API使用的Mysql Session
