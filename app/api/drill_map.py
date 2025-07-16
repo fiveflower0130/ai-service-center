@@ -6,16 +6,12 @@ from app.schemas import ClassificationRequest, ClassificationRecord, Resp
 from app.utils.response_helper import resp
 from app.crud import drill_map as crud
 from app.database.mysql_database import get_mysql_db
+from app.app import get_drill_ai_module
 
 router = APIRouter(
     prefix="/drill_map",
     tags=["drill_map_ai"]
 )
-
-def get_drill_ai_module():
-    from ..app import drill_ai_module
-    return drill_ai_module
-
 
 
 @router.post("/classify", response_model = Resp, summary="機鑽圖分類")

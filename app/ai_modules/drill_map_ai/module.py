@@ -14,6 +14,7 @@ from torchvision import models,transforms
 from PIL import Image
 
 class DrillMapAIModule:
+    init_done = False
     # Initialize icecream for debugging
     # ic.disable()
     # if os.getenv('PRODUCTION') == 1:
