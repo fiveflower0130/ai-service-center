@@ -5,7 +5,7 @@ This platform will serve as the central hub for managing and deploying all futur
 
 ## docker啟動方式
 1. 確保已安裝 Docker 和 Docker Compose。
-2. 在終端機中，導航到此專案的根目錄。
+2. 在終端機中，切換到此專案的根目錄。
 3. 執行以下命令以啟動服務：
    ```bash
    docker-compose up -d
