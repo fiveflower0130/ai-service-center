@@ -8,3 +8,9 @@ data_model/
 .env
 .cache/
 
+*.log
+*.txt
+
+.DS_Store
+.vscode/
+.idea/
