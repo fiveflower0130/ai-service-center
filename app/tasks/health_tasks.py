@@ -1,8 +1,7 @@
 from app.tasks.celery_app import celery_app
-from app.database.mysql_database import mysql_session
+from app.database.sync_mysql_database import mysql_sync_session
 from icecream import ic
-import asyncio
-from app.crud.drill_map import test_connection
+from app.crud.drill_map_sync import sync_test_connection
 
 @celery_app.task(bind=True, name='app.tasks.health_tasks.health_check')
 def health_check(self):
@@ -12,16 +11,9 @@ def health_check(self):
         self.update_state(state='PROGRESS', meta={'progress': 0, 'status': '開始檢查'})
         
         # 執行非同步資料庫查詢
-        result = asyncio.run(_health_check())
+        result = _health_check()
         
-        self.update_state(
-            state='SUCCESS', 
-            meta={
-                'progress': 100, 
-                'status': '檢查完成',
-                'result': result
-            }
-        )
+        self.update_state(state='SUCCESS', meta={'progress': 100, 'status': '檢查完成', 'result': result})
 
         ic(f"健康檢查完成: {result}")
         return result
@@ -35,24 +27,16 @@ def health_check(self):
         )
         raise
 
-async def _health_check():
+def _health_check():
     """非同步健康檢查函式"""
-    async with mysql_session() as session:
+    with mysql_sync_session() as session:
         try:
             # 執行簡單的 SQL 查詢
 
-            result = await test_connection(session)
+            result = sync_test_connection(session)
             
-            return {
-                "database_status": "connected",
-                "test_query_result": result,
-                "message": "資料庫連線正常"
-            }
+            return {"database_status": "connected", "test_query_result": result, "message": "資料庫連線正常"}
             
         except Exception as e:
             ic(f"資料庫查詢錯誤: {str(e)}")
-            return {
-                "database_status": "failed",
-                "error": str(e),
-                "message": "資料庫連線失敗"
-            }
+            return {"database_status": "failed", "error": str(e), "message": "資料庫連線失敗"}

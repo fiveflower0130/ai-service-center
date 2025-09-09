@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from icecream import ic
 from app.crud import drill_map as drill_map_crud
 from app.tasks.celery_app import celery_app
-from app.database.mysql_database import mysql_session
+from app.database.async_mysql_database import mysql_session
 
 
 
