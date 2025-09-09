@@ -1,15 +1,15 @@
-import asyncio
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.ai_modules.drill_map_ai.module import DrillMapAIModule
+from app.ai_modules.drill_map_ai import get_drill_ai_module_instance
 from app.api.drill_map import router as drill_map_router
 
-drill_ai_module = DrillMapAIModule()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # 啟動時初始化
     try:
+        # 初始化 Drill MAP AI
+        drill_ai_module = get_drill_ai_module_instance()
         if not drill_ai_module.init_done:
             await drill_ai_module.async_init()
             drill_ai_module.init_done = True
@@ -37,9 +37,6 @@ app = FastAPI(
 )
 
 app.include_router(drill_map_router)
-
-def get_drill_ai_module():
-    return drill_ai_module
 
 @app.get("/", summary="Root Endpoint", description="Welcome message for the AI Services Center")
 async def root():
