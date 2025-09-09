@@ -1,17 +1,26 @@
 import datetime
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.ai_modules.drill_map_ai.module import DrillMapAIModule
+from app.ai_modules.drill_map_ai import DrillMapAIModule, get_drill_ai_module
 from app.schemas import ClassificationRequest, ClassificationRecord, Resp
 from app.utils.response_helper import resp
 from app.crud import drill_map as crud
-from app.database.mysql_database import get_mysql_db
-from app.app import get_drill_ai_module
+from app.database.async_mysql_database import get_mysql_db
 
 router = APIRouter(
     prefix="/drill_map",
     tags=["drill_map_ai"]
 )
+
+@router.get("/test_sync_call", response_model=Resp)
+async def test_sync_call(db: AsyncSession = Depends(get_mysql_db)):
+    """測試同步調用是否能正常使用 AsyncSession"""
+    try:
+        # 這裡使用 AsyncSession
+        result = await crud.test_connection(db)
+        return resp(None, {"database_connected": result, "message": "同步調用成功", "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+    except Exception as e:
+        return resp(str(e))
 
 
 @router.post("/classify", response_model = Resp, summary="機鑽圖分類")
