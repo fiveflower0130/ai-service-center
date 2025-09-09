@@ -38,10 +38,15 @@ class Config:
 
     # 組合後的連線字串
     @property
-    def mysql_url(self) -> str:
-        """組合 MySQL 連線字串"""
+    def async_mysql_url(self) -> str:
+        """組合異步用 MySQL 連線字串"""
         return f"mysql+asyncmy://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DATABASE}"
     
+    @property
+    def sync_mysql_url(self) -> str:
+        """組合同步用 MySQL 連線字串"""
+        return f"mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DATABASE}"
+
     @property
     def redis_url(self) -> str:
         """組合 Redis 連線字串"""
@@ -62,7 +67,7 @@ class Config:
         return self.rabbitmq_url
     
     @property
-    def celery_result_backend(self) -> str:
+    def celery_result(self) -> str:
         """Celery Result Backend URL (使用 Redis)"""
         return self.redis_url
 
@@ -71,10 +76,6 @@ config = Config()
 
 # Debug 輸出
 if config.APP_DEBUG:
-    ic("設定載入完成:")
-    ic(f"MySQL URL: {config.mysql_url}")
-    ic(f"Redis URL: {config.redis_url}")
-    ic(f"RabbitMQ URL: {config.rabbitmq_url}")
-    ic(f"App Environment: {config.APP_ENV}")
+    ic("設定MySQL, Redis, RabbitMQ, Environment 載入完成:")
 else:
     ic.disable()
