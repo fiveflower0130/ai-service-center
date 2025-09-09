@@ -4,7 +4,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115.13-green.svg)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-AI Services Center 是一個基於 FastAPI 的企業級 AI 服務平台，專門用於管理和部署各種 AI 預測服務。目前主要提供機鑽圖異常分類功能，並整合了 Celery 背景任務系統。
+AI Services Center 是一個基於 FastAPI 開發的 AI 服務平台，專門用於管理和部署各種 AI 預測服務。目前主要提供機鑽圖異常分類功能，並整合了 Celery 背景任務系統。
 
 ## 🎯 功能特色
 
