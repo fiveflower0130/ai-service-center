@@ -16,21 +16,21 @@ async def test_connection(db: AsyncSession):
 
 async def create_classification_record(db: AsyncSession, record: ClassificationRecord):
     print(record)
-    new_record = my_models.DrillMapAIPredictionRecord(**record)
+    new_record = my_models.DrillMapAIClassificationRecord(**record)
     db.add(new_record)
     await db.commit()
     await db.refresh(new_record)
     return True
 
 async def get_classification_record_check(db: AsyncSession, image_path: str):
-    stmt = select(my_models.DrillMapAIPredictionRecord).filter(my_models.DrillMapAIPredictionRecord.image_path == image_path)
+    stmt = select(my_models.DrillMapAIClassificationRecord).filter(my_models.DrillMapAIClassificationRecord.image_path == image_path)
     result = await db.execute(stmt)
     return result.scalars().first()
 
 async def get_classification_record_by_datetime(db: AsyncSession, start_time: str, end_time: str):
-    stmt = select(my_models.DrillMapAIPredictionRecord).filter(
-        my_models.DrillMapAIPredictionRecord.classification_time >= start_time,
-        my_models.DrillMapAIPredictionRecord.classification_time <= end_time
+    stmt = select(my_models.DrillMapAIClassificationRecord).filter(
+        my_models.DrillMapAIClassificationRecord.classification_time >= start_time,
+        my_models.DrillMapAIClassificationRecord.classification_time <= end_time
     )
     result = await db.execute(stmt)
     return result.scalars().all()
