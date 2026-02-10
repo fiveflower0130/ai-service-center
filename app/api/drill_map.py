@@ -72,7 +72,7 @@ async def classify(
 
         # 插入DB儲存
         insert_result = await crud.create_classification_record(db, classification_record)
-        print(f"資料已寫入: {insert_result}")
+        
         return resp(None, data)
     
     except Exception as err:

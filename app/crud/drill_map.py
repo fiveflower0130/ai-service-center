@@ -11,11 +11,10 @@ async def test_connection(db: AsyncSession):
         result = await db.execute(stmt)
         return result is not None
     except Exception as e:
-        print(f"Database connection test failed: {e}")
+
         return False
 
 async def create_classification_record(db: AsyncSession, record: ClassificationRecord):
-    print(record)
     new_record = my_models.DrillMapAIClassificationRecord(**record)
     db.add(new_record)
     await db.commit()
