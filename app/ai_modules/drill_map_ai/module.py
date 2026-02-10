@@ -335,22 +335,22 @@ class DrillMapAIModule:
             return value
         try:
             is_percent = '%' in value
-            value = value.replace(' ', '').replace('%', '')
+            clean_value = value.replace(' ', '').replace('%', '')
             # value = value.strip().replace(' ', '').replace('%', '')
             # value = value.replace('O', '0').replace('G', '6')
-            value = value.replace('O', '0').replace('G', '6').replace('l', '1').replace('I', '1').replace('A', '7').replace('il', '11')
-            value = '0' + value if value.startswith('.') else value
+            clean_value = clean_value.replace('O', '0').replace('G', '6').replace('l', '1').replace('I', '1').replace('A', '7').replace('il', '11')
+            clean_value = '0' + value if value.startswith('.') else clean_value
             # 修正負號處理
-            if '-' in value:
-                value ='-' + value[1:].replace('-', '.') if value.startswith('-') else value.replace('-', '.')
+            if '-' in clean_value:
+                clean_value ='-' + clean_value[1:].replace('-', '.') if clean_value.startswith('-') else clean_value.replace('-', '.')
             # replace_dict = {'il': '11', 'A': '7', 'l': '1', 'I': '1'}
             # value = replace_dict.get(value, value)
-            result = float(value)
+            result = float(clean_value)
             # return float(value) / 100 if '%' in value else float(value)
             return result / 100 if is_percent else result
         
         except Exception as e:
-            self._ic(f"Error cleaning OCR value: {e}")
+            self._ic(f"Error cleaning OCR value[{value}]: {e}")
             return -1
     
     def _compute_mahalanobis(self, ocr_input: pd.DataFrame, stats: dict) -> dict:
@@ -768,8 +768,12 @@ class DrillMapAIModule:
         
         product_name_mapping = self._product_model_map
         product_model = product_name_mapping.get(product_name, 'unknown')
+
+        from pathlib import Path
+        img_src = Path(img_src)  # 轉為 Path 物件
+
         # 檢查圖片是否存在
-        if os.path.exists(img_src):
+        if img_src.exists():
             try:
                 ocr_df = await self._cnocr_inference(img_src)
                 # 檢查 OCR 結果是否為空
