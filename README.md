@@ -325,7 +325,7 @@ docker-compose down -v
 
 ## 📞 支援與聯絡
 
-如有問題或建議，請聯絡開發團隊或建立 Issue。
+如有問題或建議，請聯絡開發人員 Dante 或建立 Issue。
 
 ## 📄 授權條款
 
@@ -333,4 +333,4 @@ docker-compose down -v
 
 ---
 
-**AI Services Center** - 企業級 AI 服務管理平台 🚀
+**AI Services Center** - AI 服務管理平台 🚀
