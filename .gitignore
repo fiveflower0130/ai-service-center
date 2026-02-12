@@ -14,3 +14,7 @@ data_model/
 .DS_Store
 .vscode/
 .idea/
+.python-version
+*.ipynb_checkpoints
+
+uv.lock
